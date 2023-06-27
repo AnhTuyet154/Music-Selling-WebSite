@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musik</title>
+  <link th:fragment="link-css" rel="stylesheet" th:href="@{css/site.css}">
+  <style>
+
+  </style>
+  <script src="https://kit.fontawesome.com/60e83084da.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="backgroundall">
+  <img src="HINH/Default.jpg" class="thumbblur" id="songimg" onerror="imgError(this);">
+</div>
+
+<div class="container">
+  <div class="navbar">
+    <img src="HINH/logo.png" class="logo" alt="Musik Logo">
+    <h4>MUSIK</h4>
+    <div class="menu">
+      <a href="/home/index"><div><i class="fa-solid fa-house"></i></div></a>
+      <a href="/home/listSongs"><div><i class="fa-solid fa-book-open"></i></div></a>
+      <a href="/home/createPlaylist"><div><i class="fa-solid fa-plus"></i></div></a>
+    </div>
+  </div>
+  <div class="music-player">
+    <div class="background-overlay"></div>
+    <nav>
+      <div class="circle">
+        <i class="fa-solid fa-chevron-left"></i>
+      </div>
+      <div class="circle">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+    </nav>
+    <div class="song-img-wrapper">
+      <img src="HINH/Default.jpg" class="song-img" alt="" id="song-img" onerror="imgError(this);">
+    </div>
+    <style>
+
+    </style>
+    <h1 class="titlesong"></h1>
+    <p class="artist"></p>
+    <audio id="song">
+      <source src="media/AAA.mp3" type="audio/mp3">
+    </audio>
+    <div class="controls">
+      <div class="shuffle" onclick="toggleShuffle()"><i class="fa-solid fa-shuffle"></i></div>
+      <div onclick="skipSong()"><i class="fa-solid fa-backward-step"></i></div>
+      <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrlIcon"></i></div>
+      <div onclick="skipSong()"><i class="fa-solid fa-forward-step"></i></div>
+      <div class="changable repeat" onclick="repeatSong()"><i class="fa-solid fa-repeat"></i></div>
+    </div>
+    <script>
+
+    </script>
+  </div>
+  <div class="searchbox">
+    <div><i class="fa-solid fa-magnifying-glass"></i></div>
+    <form method="get" action="/listSongs" id="search-form">
+      <input type="text" placeholder="Search.." name="searchQuery" id="search-input" value="@ViewBag.SearchQuery" onkeydown="if(event.keyCode==13) document.getElementById('search-form').submit()">
+    </form>
+  </div>
+  <div class="accountbar">
+    <div class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa-solid fa-user"></i>
+      </a>
+      <ul class="dropdown-menu">
+        @if (User.Identity.IsAuthenticated)
+        {
+        <li><a href="#">@User.Identity.Name</a></li>
+        <li role="separator" class="divider"></li>
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+        @Html.AntiForgeryToken()
+        <ul class="navbar-nav navbar-right">
+          <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+        }
+        }
+        else
+        {
+        <li><a href="/account/login">Log in</a></li>
+        }
+      </ul>
+    </div>
+    <style>
+
+    </style>
+    <a href="/home/uploadNhac">
+      <div>
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+      </div>
+    </a>
+  </div>
+</div>
+<div class="progressbar">
+  <div class="current-time">00:00</div>
+  <input type="range" value="0" id="progress">
+  <div class="total-duration">00:00</div>
+  <div><i class="fa-solid fa-list-ul"></i></div>
+  <div class="pcontrols">
+    <div onclick="toggleMute()"><i class="fa-solid fa-volume-high"></i></div>
+  </div>
+  <input type="range" value="100" id="volume">
+</div>
+<script>
+
+</script>
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

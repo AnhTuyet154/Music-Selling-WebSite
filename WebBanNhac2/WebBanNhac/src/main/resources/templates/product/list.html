@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Music Selling Website</title>
+  <th:block th:replace="~{layout::link-css}"></th:block>
+  <th:block th:replace="~{layout::custom-css}"></th:block>
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <nav class="navbar navbar-light">
+        <div class="container-fluid">
+          <h2>Beat Music List</h2>
+          <form class="d-flex" th:action="@{/products/search}"
+                method="get">
+            <input class="form-control me-2" type="search"
+                   placeholder="Search" aria-label="Search" name="keyword">
+            <button class="btn btn-outline-success"
+                    type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </div>
+  </div>
+  <table class="table">
+    <thead>
+    <tr>
+      <th><a th:href="@{/products(pageNo=${currentPage}, sortBy=
+'id')}">Id</a></th>
+      <th><a th:href="@{/products(pageNo=${currentPage}, sortBy=
+'title')}">Title</a></th>
+      <th><a th:href="@{/products(pageNo=${currentPage}, sortBy=
+'author')}">Author</a></th>
+      <th><a th:href="@{/products(pageNo=${currentPage}, sortBy=
+'price')}">Price</a></th>
+      <th><a th:href="@{/products(pageNo=${currentPage}, sortBy=
+'category')}">Category</a></th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+      <td th:text="${product.getId()}"></td>
+      <td th:text="${product.getTitle()}"></td>
+      <td th:text="${product.getAuthor()}"></td>
+      <td th:text="${product.getPrice()}"></td>
+      <td th:text="${product.getCategory().getName()}"></td>
+      <td colspan="2">
+        <a class="btn btn-primary"
+           th:href="@{/products/edit/{id}(id=${product.getId()})}">Edit</a>
+        <a class="btn btn-danger"
+           th:href="@{/products/delete/{id}(id=${product.getId()})}"
+           onclick="return confirm('Are you sure you want to delete this beat?')">Delete</a>
+        <form th:action="@{/products/add-to-cart}" method="post" class="d-inline">
+          <input type="hidden" name="id" th:value="${product.getId()}">
+          <input type="hidden" name="name" th:value="${product.getTitle()}">
+          <input type="hidden" name="price"
+                 th:value="${product.getPrice()}">
+          <button type="submit" class="btn btn-success"
+                  onclick="return confirm('Are you sure you want to add this beat to cart?')">
+            Add to cart</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center pagination-sm"
+      th:each="i : ${#numbers.sequence(0, totalPages)}">
+    <li class="page-item" th:classappend="${currentPage == i} ?
+'active'">
+      <a class="page-link" th:href="@{/products(pageNo=${i})}"
+         th:text="${i}"></a>
+    </li>
+  </ul>
+</nav>
+<th:block th:replace="~{layout::footer}"></th:block>
+</body>
+</html>

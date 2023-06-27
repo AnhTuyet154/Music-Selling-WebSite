@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <meta charset="UTF-8">
+  <th:block th:replace="~{layout :: link-css}"></th:block>
+  <title>Add Order</title>
+</head>
+<body>
+<th:block th:replace="~{layout :: header}"></th:block>
+<div class="container2">
+  <h1>Add Order</h1>
+  <form th:action="@{/orders/add}" th:object="${order}" method="post">
+    <div class="col-6 mb-3">
+      <label class="form-label" for="customer">Customer ID: </label>
+      <input class="form-control" type="text" th:field="*{customer}" id="customer">
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="orderDate">Order Date: </label>
+      <input class="form-control" type="date" th:field="*{orderDate}" id="orderDate">
+    </div>
+
+    <div class="col-6 mb-3">
+      <label class="form-label" for="product">Product ID: </label>
+      <input class="form-control" type="text" th:field="*{product}" id="product">
+    </div>
+
+    <div class="col-6 mb-3">
+      <label class="form-label" for="quantity">Quantity: </label>
+      <input class="form-control" type="text" th:field="*{quantity}" id="quantity">
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="totalAmount">Total Amount: </label>
+      <input class="form-control" type="text" th:field="*{totalAmount}" id="totalAmount">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Save">
+  </form>
+  <br>
+  <a th:href="@{/orders}">Back to List</a>
+</div>
+<th:block th:replace="~{layout :: footer}"></th:block>
+</body>
+</html>

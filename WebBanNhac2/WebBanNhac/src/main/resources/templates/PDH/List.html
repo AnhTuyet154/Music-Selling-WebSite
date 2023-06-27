@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title> Danh Sach Don Dat Hang</title>
+  <th:block th:replace="~{layout :: link-css}"></th:block>
+</head>
+
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container2">
+  <h1 th:text=${title}> </h1>
+  <a href="/PDHs/add" class="btn btn-xam">Add</a>
+  <table class="table">
+    <tr>
+      <th>ID</th>
+      <th>Ghi chu</th>
+      <th>Ngay lap</th>
+      <th>Ngay giao</th>
+    </tr>
+    <tr th:each="PDH : ${PDHs}">
+      <td th:text="${PDH.id}"></td>
+      <td th:text="${PDH.note}"></td>
+      <td th:text="${PDH.Ngay_lap}"></td>
+      <td th:text="${PDH.Ngay_giao}"></td>
+      <td>
+        <a th:href="@{/PDHs/edit/{id}(id=${PDH.id})}">Edit</a>
+        <a th:href="@{/PDHs/delete/{id}(id=${PDH.id})}"
+           onclick = "return comfirm('Are you sure?')">Delete</a>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<th:block th:replace="layout ::footer"></th:block>
+</body>
+</html>

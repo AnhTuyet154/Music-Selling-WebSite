@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecuriry4"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="~{layout :: link-css}"></th:block>
+    <title>Add Phieu Dat Hang</title>
+    </th:block>
+</head>
+<body>
+<th:block th:replace="~{layout :: header}"></th:block>
+<div class="container2">
+    <h1>Add PDH</h1>
+    <form th:action="@{/PDHs/add}" th:object="${PDH}" method="post">
+        <div class="col-6 mb-3">
+            <label class="form-label" for="note">Noi dung</label>
+            <input class="form-control" type="text" th:field="*{note}" id="note">
+        </div>
+        <div class="col-6 mb-3">
+            <label class="form-label" for="Ngay_lap">Ngay lap</label>
+            <input class="form-control" type="date" th:field="*{Ngay_lap}" id="Ngay_lap">
+        </div>
+        <div class="col-6 mb-3">
+            <label class="form-label" for="Ngay_giao">Ngay giao</label>
+            <input class="form-control" type="date" th:field="*{Ngay_giao}" id="Ngay_giao">
+        </div>
+
+        <input type="submit" class="btn btn-xam" value="Save">
+    </form>
+    <br>
+    <a th:href="@{/PDHs}">Back to List</a>
+</div>
+<th:block th:replace="~{layout :: footer}"></th:block>
+</body>
+</html>

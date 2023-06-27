@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecuriry4"
+      lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Song List</title>
+    <th:block th:replace="layout::link-css"></th:block>
+    <script>
+    function limitAudioDuration(audioElement, duration) {
+        audioElement.addEventListener('timeupdate', function() {
+            if (audioElement.currentTime > duration) {
+                audioElement.currentTime = duration;
+                audioElement.pause();
+            }
+        });
+    }
+    </script>
+    </script>
+</head>
+
+<body>
+<th:block th:replace="layout::header"></th:block>
+<div class="container2">
+    <h1 th:text="${title}"></h1>
+
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Price</th>
+            <th>Genre</th>
+            <th></th>
+            <th sec:authorize="hasAnyAuthority('ADMIN')">Action</th>
+        </tr>
+        <tr th:each="song : ${songs}" onclick="changeBackgroundImage(${song.id})">
+
+            <td>
+                <img th:if="${song.pictureContent != null}" th:src="@{/songs/image/{id}(id=${song.id})}" alt="Song Image" style="max-width: 70px; border-radius: 15%;">
+
+
+            </td>
+
+            </td>
+                <td th:text="${song.title}"></td>
+                <td th:text="${song.artist}"></td>
+            <td th:text="${song.price + ' VND'}"></td>
+
+            <td th:text="${song.genre.name}"></td>
+            <td>
+
+            </td>
+            <td>
+                <form th:action="@{/songs/add-to-cart}" method="post" class="d-inline">
+                    <input type="hidden" name="id" th:value="${song.getId()}">
+                    <input type="hidden" name="name" th:value="${song.getTitle()}">
+                    <input type="hidden" name="price" th:value="${song.getPrice()}">
+                    <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to add this song to cart?')">
+                        <i class="fa fa-cart-plus"></i>
+                    </button>
+                </form>
+            </td>
+            <td>
+                <audio controls controlsList="nodownload" onloadedmetadata="limitAudioDuration(this, 5)">
+                    <source th:src="@{/songs/play/{id}(id=${song.id})}" type="audio/mpeg">
+                </audio>
+            </td>
+            <td sec:authorize="hasAnyAuthority('ADMIN')">
+                <a th:href="@{/songs/edit/{id}(id=${song.id})}" class="fa fa-edit"></a>
+                <a th:href="@{/songs/delete/{id}(id=${song.id})}" onclick="return confirm('Are you sure?')" class="fa fa-trash"></a>
+            </td>
+        </tr>
+    </table>
+</div>
+<th:block th:replace="layout::footer"></th:block>
+</body>
+
+</html>

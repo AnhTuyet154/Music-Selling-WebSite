@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecuriry4"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My App</title>
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body>
+<header th:fragment="header">
+    <div class="backgroundall">
+        <img th:src="@{/HINH/Default.jpg}" class="thumbblur" id="songimg">
+    </div>
+    <div class="containerX">
+        <div class="navbarX">
+            <img src="HINH/logo.png" class="logo" alt="">
+            <h4>MUSIK</h4>
+            <div class="menu">
+                <a href="/"><div><i class="fa-solid fa-house"></i></div></a>
+                <a href="/songs"><div><i class="fa-solid fa-music"></i></div></a>
+                <td sec:authorize="hasAnyAuthority('ADMIN')">
+                    <a href="/PDHs"><div><i class="fa-regular fa-clipboard"></i></div></a></td>
+            </div>
+        </div>
+        <div class="searchbox">
+            <div><i class="fa-solid fa-magnifying-glass"></i></div>
+            <form method="get" action="/listSongs" id="search-form">
+                <input type="text" placeholder="Search.." name="searchQuery" id="search-input" value="" onkeydown="if(event.keyCode==13) document.getElementById('search-form').submit()">
+            </form>
+        </div>
+
+        <div class="accountbar">
+            <td sec:authorize="hasAnyAuthority('ADMIN')">
+                <a href="/songs/add">
+                    <div>
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                </a>
+            </td>
+            <a href="/cart"><div><i class="fa-solid fa-basket-shopping"></i></div></a>
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post">
+                            <button class="btn btn-outline-danger" type="submit">Logout</button>
+                        </form>
+                    </li>
+                    <li sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-outline-primary" href="/login">Login</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<div th:insert="~{::${content}}">
+    <!-- NỘI DUNG TRANG CON -->
+</div>
+<footer th:fragment="footer">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{https://kit.fontawesome.com/60e83084da.js}" crossorigin="anonymous"></script>
+    <script th:src="@{/js/script.js}"></script>
+</footer>
+</body>
+</html>

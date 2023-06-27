@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout</title>
+  <th:block th:replace="layout::link-css"></th:block>
+</head>
+<body>
+<th:block th:replace="layout::header"></th:block>
+<div class="container3">
+  <form th:action="@{/cart/processCheckout}" method="post">
+
+    <h1>Your checkout information</h1>
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-xam">Submit</button>
+    </div>
+  </form>
+</div>
+<th:block th:replace="layout::footer"></th:block>
+</body>
+</html>

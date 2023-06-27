@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Play Song</title>
+  <!-- Add any additional CSS or JavaScript files you need -->
+</head>
+<body>
+<h1>Play Song</h1>
+
+<div>
+  <h3>Title: <span th:text="${song.title}"></span></h3>
+  <h4>Artist: <span th:text="${song.artist}"></span></h4>
+  <p>Genre: <span th:text="${song.genre.name}"></span></p>
+</div>
+
+<div>
+  <audio controls>
+    <source th:src="@{/songs/play/{id}(id=${song.id})}" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+</div>
+
+<!-- Add any additional content or functionality you need -->
+</body>
+</html>

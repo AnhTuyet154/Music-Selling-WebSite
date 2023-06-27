@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>ỨNG DỤNG QUẢN LÝ SÁCH</title>
+  <th:block th:replace="~{layout::link-css}"></th:block>
+
+</head>
+
+<body>
+<h1 class="pagehead">Danh sách người dùng</h1>
+<th:block th:replace="~{layout::header}"></th:block>
+
+<div class="container2">
+  <table class="table">
+    <tr>
+      <th>ID</th>
+      <th>Tên người dùng</th>
+      <th>Tên tài khoản</th>
+      <th>Email</th>
+      <th>Sửa</th>
+    </tr>
+    <tr th:each="user : ${users}">
+      <td th:text="${user.id}"></td>
+      <td th:text="${user.name}"></td>
+      <td th:text="${user.username}"></td>
+      <td th:text="${user.email}"></td>
+      <td>
+        <div class="button-container">
+          <a class="btn btn-primary edit-button" th:href="@{'/users/edit/' + ${user.id}}">Edit</a>
+          <a class="btn btn-danger" th:href="@{'/user/delete/' + ${user.id}}">Delete</a>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<th:block th:replace="~{layout::footer}"></th:block>
+</body>
+
+</html>

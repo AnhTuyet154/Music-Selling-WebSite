@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <th:block th:replace="~{layout :: link-css}"></th:block>
+  <title>Edit</title>
+</head>
+<body>
+<th:block th:replace="~{layout :: header}"></th:block>
+
+<div class="container2">
+  <h1>Edit Phieu Dat Hang</h1>
+  <form th:action="@{/PDHs/edit}" th:object="${PDH}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <div class="col-6 mb-3">
+      <label class="form-label" for="Id">Customer ID: </label>
+      <input class="form-control" type="text" th:field="*{id}" id="Id">
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="Ngay_lap">Ngay lap: </label>
+      <input class="form-control" type="date" th:field="*{Ngay_lap}" id="Ngay_lap">
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="Ngay_giao">Ngay giao: </label>
+      <input class="form-control" type="date" th:field="*{Ngay_giao}" id="Ngay_giao">
+    </div>
+    <div class="col-6 mb-3">
+      <label class="form-label" for="note">Note: </label>
+      <input class="form-control" type="text" th:field="*{note}" id="note">
+    </div>
+    <input type="submit" value="Save">
+  </form>
+  <br>
+  <a th:href="@{/PDHs}">Back to List</a>
+</div>
+<th:block th:replace="~{layout :: footer}"></th:block>
+</body>
+</html>
